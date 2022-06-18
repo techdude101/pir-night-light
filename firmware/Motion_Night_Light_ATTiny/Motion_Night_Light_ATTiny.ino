@@ -19,6 +19,15 @@ const int errorLedPin = 0; // PB0 - Red LED (direct drive)
 
 const int lowLightThreshold = 150;
 
+/* 
+ * Vref = 1.1V 
+ * R1 = 10k, R2 = 1k
+ * Voltage divider Vout = (Vbatt / (R1 + R2)) * R2
+ * Voltage divider Vout = (3.2 V / (R1 + R2)) * R2 = 0.290 V
+ * ADC Value @ 3.2 V = 0.290 V / (1.1 V / 1024) = 269.9 = 270
+ */
+const int lowBatteryAdcValue = 270; // Approx. 3.2 V
+
 // Global Variables
 
 
