@@ -1,3 +1,11 @@
+/**
+ * @file Motion_Night_Light_ATTiny.ino
+ * @brief Main application
+ * 
+ * @author techdude101
+ * @bug No known bugs
+ */
+
 #include <avr/sleep.h>
 #include <avr/interrupt.h>
 
@@ -26,6 +34,10 @@ ISR(WDT_vect) {
 // End of interrupt vectors
 
 // Function definitions
+/**
+ * @brief Enables pin change interrupt, turns the ADC off to save power and enters sleep mode
+ * @return Void.
+ */
 void enter_sleep() {
   // Enable interrupts before entering sleep mode
   GIMSK |= _BV(PCIE);                     // Enable Pin Change Interrupts
@@ -43,43 +55,79 @@ void enter_sleep() {
   GIMSK &= ~_BV(PCIE);                     // Disable Pin Change Interrupts
 }
 
+/**
+ * @brief Sets the pin as an output and sets the pin HIGH to turn the error LED on
+ * @return Void.
+ */
 void turnErrorLedOn(int pin) {
   pinMode(pin, OUTPUT);
   digitalWrite(pin, HIGH);
 }
 
+/**
+ * @brief Sets the pin LOW to turn the error LED off and sets the pin as an input
+ * @return Void.
+ */
 void turnErrorLedOff(int pin) {
   digitalWrite(pin, LOW);
   pinMode(pin, INPUT);
 }
 
+/**
+ * @brief Sets the pin as an output and sets the pin HIGH to turn the LED on
+ * @return Void.
+ */
 void turnLightOn(int pin) {
   pinMode(pin, OUTPUT);
   digitalWrite(pin, HIGH);
 }
 
+/**
+ * @brief Sets the pin LOW to turn the LED off and sets the pin as an input
+ * @return Void.
+ */
 void turnLightOff(int pin) {
   digitalWrite(pin, LOW);
   pinMode(pin, INPUT);
 }
 
+/**
+ * @brief Sets the pin HIGH to supply power to the voltage divider
+ * @return Void.
+ */
 void ldrDividerPowerOn(int pin) {
   pinMode(pin, OUTPUT);
   digitalWrite(pin, HIGH);
 }
 
+/**
+ * @brief Sets the pin LOW to disable power to the voltage divider
+ * @return Void.
+ */
 void ldrDividerPowerOff(int pin) {
   digitalWrite(pin, LOW);
 }
 
+/**
+ * @brief Enables the ADC
+ * @return Void.
+ */
 void enableADC() {
   ADCSRA |= _BV(ADEN);                   // ADC on
 }
 
+/**
+ * @brief Disables the ADC
+ * @return Void.
+ */
 void disableADC() {
     ADCSRA &= ~_BV(ADEN);               // ADC off    
 }
 
+/**
+ * @brief Reads the ADC <nSamplesToAverage> times with a delay of <delayBetweenReadsInMs> milliseconds inbetween reads
+ * @return Average light level or -1 if nSamplesToAverage is invalid
+ */
 int getAverageLightLevel(int pin, int nSamplesToAverage, int delayBetweenReadsInMs) {
   enableADC();
   int average = 0;
