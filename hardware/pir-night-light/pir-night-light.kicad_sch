@@ -952,6 +952,24 @@
     (pin "2" (uuid cd1f5647-0c85-4d0c-bb77-51841a919cef))
   )
 
+  (symbol (lib_id "power:+BATT") (at 154.94 123.19 270) (unit 1)
+    (in_bom yes) (on_board yes) (fields_autoplaced)
+    (uuid 318cca53-4454-429e-b3f4-efb5d4ce3eeb)
+    (property "Reference" "#PWR010" (id 0) (at 151.13 123.19 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+BATT" (id 1) (at 158.115 123.1899 90)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "" (id 2) (at 154.94 123.19 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (id 3) (at 154.94 123.19 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 74277d5c-c9cb-433f-9627-d9aab5160f3d))
+  )
+
   (symbol (lib_id "power:Earth") (at 92.71 55.88 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 31ab29e1-b14b-4cc8-8042-8846f4a483a9)
@@ -1186,6 +1204,21 @@
     (pin "2" (uuid 67658ea1-82bd-498f-b733-e6c20c156440))
   )
 
+  (symbol (lib_id "Device:R") (at 151.13 123.19 90) (unit 1)
+    (in_bom yes) (on_board yes)
+    (uuid cd5c661e-5955-464f-9c17-e3855a0a3a02)
+    (property "Reference" "R8" (id 0) (at 151.13 125.73 90))
+    (property "Value" "10k" (id 1) (at 151.13 123.19 90))
+    (property "Footprint" "" (id 2) (at 151.13 124.968 90)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (id 3) (at 151.13 123.19 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 145c7669-13a2-4b4b-9dd9-09a3a10c7692))
+    (pin "2" (uuid d2f54bf4-8c40-42c0-b1ba-b9f0e2e241e1))
+  )
+
   (symbol (lib_id "power:Earth") (at 184.15 118.11 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid e058fcc0-6e04-46c9-90b8-edab072a02d8)
@@ -1292,6 +1325,9 @@
     (path "/1314f906-a5b2-4d21-a0cc-c050636fb55d"
       (reference "#PWR09") (unit 1) (value "Earth") (footprint "")
     )
+    (path "/318cca53-4454-429e-b3f4-efb5d4ce3eeb"
+      (reference "#PWR010") (unit 1) (value "+BATT") (footprint "")
+    )
     (path "/252b166a-0097-4642-8cbf-ec7dd6976b10"
       (reference "D1") (unit 1) (value "RED LED") (footprint "")
     )
@@ -1333,6 +1369,9 @@
     )
     (path "/7bd536db-b876-4637-9310-f163f383d435"
       (reference "R7") (unit 1) (value "100R") (footprint "")
+    )
+    (path "/cd5c661e-5955-464f-9c17-e3855a0a3a02"
+      (reference "R8") (unit 1) (value "10k") (footprint "")
     )
     (path "/42792f24-8f19-4181-b703-2e87c0193377"
       (reference "U1") (unit 1) (value "ATtiny85-20P") (footprint "Package_DIP:DIP-8_W7.62mm")
