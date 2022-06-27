@@ -161,6 +161,28 @@ int getAverageLightLevel(int pin, int nSamplesToAverage, int delayBetweenReadsIn
   return average;
 }
 
+/**
+ * @brief Read the ADC value at the battery voltage divider
+ * @return ADC value or -1 on error
+ */
+int measureBattery(int pin) {
+  // Set ADC Vref to 1.1V internal reference
+  analogReference(INTERNAL);
+  // Next conversion will take 25 clock cycles - 17.13.1 ADMUX – ADC Multiplexer Selection Register pg. 134
+  // Hardcode delay of 50ms to account for Vref change
+  delay(50);
+  int adcValue = analogRead(pin);
+  // Discard the 1st reading in case of garbage data after changing Vref
+  // 100ms delay to allow the voltage divider and ADC to settle
+  delay(100);
+  adcValue = analogRead(pin);
+
+  if (adcValue < 1) {
+    return -1;
+  }
+  return adcValue;
+}
+
 void setup() {
   // Flash the LEDs on startup to check hardware
   turnErrorLedOn(errorLedPin);
@@ -198,7 +220,6 @@ void loop() {
 
   lightLevel = getAverageLightLevel(ldrSensorPin, 5, 10);
 
-  disableADC();
   ldrDividerPowerOff(ldrDividerPowerPin);
 
   // Debugging
@@ -211,10 +232,21 @@ void loop() {
   // 4. Turn the light on for a period of time
   if ((lightLevel != -1) && (lightLevel < lowLightThreshold)) {
     turnLightOn(ledControlPin);
+    
+    // Measure battery voltage when light is on
+    turnErrorLedOn(errorLedPin); // Pin used to power the red error LED and also battery measurement voltage divider
+    int level = measureBattery(ldrSensorPin);
+    turnErrorLedOff(errorLedPin);
+    
+    // Turn on the error LED if battery is low
+    if (level < lowBatteryAdcValue) {
+      turnErrorLedOn(errorLedPin);
+    }
     delay(lightOnTimeInMilliseconds);
     
-    // TODO: Turn the light off only if motion is no longer detected
     // 5. Turn the light off
     turnLightOff(ledControlPin);
+    turnErrorLedOff(errorLedPin);
   }
+  disableADC();
 }
